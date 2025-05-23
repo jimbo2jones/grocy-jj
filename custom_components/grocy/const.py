@@ -47,3 +47,5 @@ ATTR_OVERDUE_TASKS: Final = "overdue_tasks"
 ATTR_SHOPPING_LIST: Final = "shopping_list"
 ATTR_STOCK: Final = "stock"
 ATTR_TASKS: Final = "tasks"
+# Attribute for completed tasks added by JJ
+ATTR_COMPLETED_TASKS: Final = "completed_tasks"

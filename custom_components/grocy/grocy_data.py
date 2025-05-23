@@ -26,6 +26,8 @@ from .const import (
     ATTR_SHOPPING_LIST,
     ATTR_STOCK,
     ATTR_TASKS,
+    # JJ: Added attribute for completed tasks
+    ATTR_COMPLETED_TASKS,
     CONF_API_KEY,
     CONF_PORT,
     CONF_URL,
@@ -54,6 +56,8 @@ class GrocyData:
             ATTR_MEAL_PLAN: self.async_update_meal_plan,
             ATTR_OVERDUE_CHORES: self.async_update_overdue_chores,
             ATTR_OVERDUE_TASKS: self.async_update_overdue_tasks,
+            # JJ: Added attribute for completed tasks
+            ATTR_COMPLETED_TASKS: self.async_update_completed_tasks,
             ATTR_BATTERIES: self.async_update_batteries,
             ATTR_OVERDUE_BATTERIES: self.async_update_overdue_batteries,
         }
@@ -101,6 +105,19 @@ class GrocyData:
         """Update tasks data."""
 
         return await self.hass.async_add_executor_job(self.api.tasks)
+    
+    # JJ: Define a new method to get completed tasks
+    async def async_update_completed_tasks(self):
+        """Update completed tasks data."""
+        # Grocy API: done=1 returns completed tasks, but only when querying objects/tasks. Not when querying tasks
+        and_query_filter = [
+            "done=1",
+        ]
+
+        def wrapper():
+            return self.api.objects.tasks(query_filters=and_query_filter)
+
+        return await self.hass.async_add_executor_job(wrapper)
 
     async def async_update_overdue_tasks(self):
         """Update overdue tasks data."""
