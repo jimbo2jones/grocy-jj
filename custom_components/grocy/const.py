@@ -32,6 +32,8 @@ CHORES: Final = "Chore(s)"
 MEAL_PLANS: Final = "Meal(s)"
 PRODUCTS: Final = "Product(s)"
 TASKS: Final = "Task(s)"
+#new for completed tasks
+COMPLETED_TASKS: Final = "Completed Task(s)"
 ITEMS: Final = "Item(s)"
 
 ATTR_BATTERIES: Final = "batteries"
@@ -47,3 +49,5 @@ ATTR_OVERDUE_TASKS: Final = "overdue_tasks"
 ATTR_SHOPPING_LIST: Final = "shopping_list"
 ATTR_STOCK: Final = "stock"
 ATTR_TASKS: Final = "tasks"
+#new for completed tasks
+ATTR_COMPLETED_TASKS: Final = "completed_tasks"

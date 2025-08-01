@@ -26,6 +26,8 @@ from .const import (
     ATTR_SHOPPING_LIST,
     ATTR_STOCK,
     ATTR_TASKS,
+    #added for completed tasks
+    ATTR_COMPLETED_TASKS,
     DOMAIN,
     PLATFORMS,
     STARTUP_MESSAGE,
@@ -85,6 +87,8 @@ async def _async_get_available_entities(grocy_data: GrocyData) -> List[str]:
         if "FEATURE_FLAG_TASKS" in grocy_config.enabled_features:
             available_entities.append(ATTR_TASKS)
             available_entities.append(ATTR_OVERDUE_TASKS)
+            #added for completed tasks
+            available_entities.append(ATTR_COMPLETED_TASKS)
 
         if "FEATURE_FLAG_CHORES" in grocy_config.enabled_features:
             available_entities.append(ATTR_CHORES)

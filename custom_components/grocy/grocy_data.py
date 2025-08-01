@@ -26,6 +26,8 @@ from .const import (
     ATTR_SHOPPING_LIST,
     ATTR_STOCK,
     ATTR_TASKS,
+    #new for completed tasks
+    ATTR_COMPLETED_TASKS,
     CONF_API_KEY,
     CONF_PORT,
     CONF_URL,
@@ -46,6 +48,8 @@ class GrocyData:
             ATTR_STOCK: self.async_update_stock,
             ATTR_CHORES: self.async_update_chores,
             ATTR_TASKS: self.async_update_tasks,
+            #added for completed tasks
+            ATTR_COMPLETED_TASKS: self.async_update_completed_tasks,
             ATTR_SHOPPING_LIST: self.async_update_shopping_list,
             ATTR_EXPIRING_PRODUCTS: self.async_update_expiring_products,
             ATTR_EXPIRED_PRODUCTS: self.async_update_expired_products,
@@ -99,8 +103,25 @@ class GrocyData:
 
     async def async_update_tasks(self):
         """Update tasks data."""
+        #update to filter for incomplete tasks
+        query_filter = ["done=0"]
+        
+        def wrapper():
+            return self.api.tasks(query_filters=query_filter)
 
-        return await self.hass.async_add_executor_job(self.api.tasks)
+        return await self.hass.async_add_executor_job(wrapper)
+
+        # return await self.hass.async_add_executor_job(self.api.tasks)
+
+    #added for completed tasks
+    async def async_update_completed_tasks(self):
+        """Update completed tasks data."""
+        query_filter = ["done=1"]
+
+        def wrapper():
+            return self.api.tasks(query_filters=query_filter)
+
+        return await self.hass.async_add_executor_job(wrapper)
 
     async def async_update_overdue_tasks(self):
         """Update overdue tasks data."""
