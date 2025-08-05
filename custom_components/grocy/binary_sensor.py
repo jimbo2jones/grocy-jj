@@ -118,7 +118,7 @@ BINARY_SENSORS: tuple[GrocyBinarySensorEntityDescription, ...] = (
         icon="mdi:alert-circle-check-outline",
         exists_fn=lambda entities: ATTR_OVERDUE_TASKS in entities,
         attributes_fn=lambda data: {
-            "overdue_tasks": [x.as_dict() for x in data],
+            "overdue_tasks": data,
             "count": len(data),
         },
     ),

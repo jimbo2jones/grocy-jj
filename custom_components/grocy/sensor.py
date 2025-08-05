@@ -23,16 +23,12 @@ from .const import (
     ATTR_SHOPPING_LIST,
     ATTR_STOCK,
     ATTR_TASKS,
-    #added for completed tasks
-    ATTR_COMPLETED_TASKS,
     CHORES,
     DOMAIN,
     ITEMS,
     MEAL_PLANS,
     PRODUCTS,
     TASKS,
-    #added for completed tasks
-    COMPLETED_TASKS,
 )
 from .coordinator import GrocyDataUpdateCoordinator
 from .entity import GrocyEntity
@@ -128,20 +124,7 @@ SENSORS: tuple[GrocySensorEntityDescription, ...] = (
         icon="mdi:checkbox-marked-circle-outline",
         exists_fn=lambda entities: ATTR_TASKS in entities,
         attributes_fn=lambda data: {
-            "tasks": [x.as_dict() for x in data],
-            "count": len(data),
-        },
-    ),
-    #added for completed tasks
-    GrocySensorEntityDescription(
-        key=ATTR_COMPLETED_TASKS,
-        name="Grocy completed tasks",
-        icon="mdi:check",
-        native_unit_of_measurement=COMPLETED_TASKS,
-        state_class=SensorStateClass.MEASUREMENT,
-        exists_fn=lambda entities: ATTR_COMPLETED_TASKS in entities,
-        attributes_fn=lambda data: {
-            "completed_tasks": [x.as_dict() for x in data],
+            "tasks": data,
             "count": len(data),
         },
     ),
